@@ -1,0 +1,179 @@
+python tools/train.py configs_pretrain/Swin_T_pretrain.py
+python tools/infer_vis.py --config configs_finetune/Swin_T/Swin_T_whu.py --checkpoint pretrain/Swin_T/iter_28000.pth --img-dir data_dir/whubuilding/test/image --save-dir pretrain/Swin_T/vis --alpha 0.5 --device cuda:0
+python tools/vis_runner.py configs_finetune/Swin_T/Swin_T_whu.py pretrain/Swin_T/iter_28000.pth --show-dir pretrain/Swin_T/vis --alpha 0.5 --device cuda:0
+python tools/vis_runner.py configs_finetune/Swin_T/Swin_T_whu.py pretrain/Swin_T/iter_28000.pth --show-dir pretrain/Swin_T/vis --cfg-options default_hooks.visualization.draw=True default_hooks.visualization.out_dir=pretrain/Swin_T/vis default_hooks.visualization.alpha=0.5
+python tools/test.py configs_finetune/Swin_T/Swin_T_whu.py pretrain/Swin_T_lyg_loss6/iter_28000.pth --show-dir ./big_prediction_results
+python tools/big_test.py configs_finetune/Swin_T/Swin_T_whu.py pretrain/Swin_T_lyg_loss6/iter_28000.pth --show-dir ./big_prediction_results
+python tools/big_test_xml.py configs_finetune/Swin_T/Swin_T_whu.py pretrain/Swin_T_lyg_loss6/iter_14000.pth --show-dir ./big_prediction_results
+
+
+
+
+
+
+
+
+(rsbuilding) root@p-e9cf62c27ede-ackcs-00gjeohp:~/shared-nvme/RSBuilding-main# python tools/big_img_infer/maskToShp.py
+=== 开始矢量化处理 ===
+原始TIFF信息:
+  坐标系: EPSG:32651
+  尺寸: (23028, 23045)
+  地理范围: BoundingBox(left=146338.25438302435, bottom=3847741.290120421, right=189635.63423912675, top=3891006.7300564735)
+  变换矩阵: | 1.88, 0.00, 146338.25|
+| 0.00,-1.88, 3891006.73|
+| 0.00, 0.00, 1.00|
+二值掩码图尺寸: (23040, 23552)
+⚠️ 尺寸不匹配，调整掩码图尺寸从 (23040, 23552) 到 (23028, 23045)
+开始矢量化...
+矢量化完成，共生成 6336 个多边形
+面积过滤: 6336 -> 6336 个多边形
+移除 0 个面积小于 10 m² 的多边形
+Traceback (most recent call last):
+  File "/root/shared-nvme/RSBuilding-main/tools/big_img_infer/maskToShp.py", line 139, in <module>
+    gdf = create_complete_workflow()
+  File "/root/shared-nvme/RSBuilding-main/tools/big_img_infer/maskToShp.py", line 100, in create_complete_workflow
+    gdf = binary_mask_to_shp_with_georef(
+  File "/root/shared-nvme/RSBuilding-main/tools/big_img_infer/maskToShp.py", line 81, in binary_mask_to_shp_with_georef
+    gdf.to_file(output_shp_path, driver='ESRI Shapefile')
+  File "/root/shared-nvme/envs/rsbuilding/lib/python3.9/site-packages/geopandas/geodataframe.py", line 1536, in to_file
+    _to_file(self, filename, driver, schema, index, **kwargs)
+  File "/root/shared-nvme/envs/rsbuilding/lib/python3.9/site-packages/geopandas/io/file.py", line 651, in _to_file
+    engine = _check_engine(engine, "'to_file' method")
+  File "/root/shared-nvme/envs/rsbuilding/lib/python3.9/site-packages/geopandas/io/file.py", line 139, in _check_engine
+    raise ImportError(
+ImportError: The 'to_file' method requires the 'pyogrio' or 'fiona' package, but neither is installed or imports correctly.
+Importing pyogrio resulted in: libpoppler.so.126: cannot open shared object file: No such file or directory
+Importing fiona resulted in: libpoppler.so.126: cannot open shared object file: No such file or directory
+(rsbuilding) root@p-e9cf62c27ede-ackcs-00gjeohp:~/shared-nvme/RSBuilding-main# pip list
+Package                Version
+---------------------- -----------
+addict                 2.4.0
+affine                 2.4.0
+albucore               0.0.24
+albumentations         2.0.8
+annotated-types        0.7.0
+attrs                  24.2.0
+branca                 0.8.1
+brotlicffi             1.0.9.2
+certifi                2025.10.5
+cffi                   2.0.0
+charset-normalizer     3.4.4
+click                  8.1.8
+click-plugins          1.1.1.2
+cligj                  0.7.2
+codecov                2.1.13
+colorama               0.4.6
+contourpy              1.3.0
+coverage               7.10.7
+cycler                 0.12.1
+einops                 0.8.1
+eval_type_backport     0.2.2
+exceptiongroup         1.3.0
+filelock               3.17.0
+Fiona                  1.9.1
+flake8                 7.3.0
+folium                 0.20.0
+fonttools              4.59.1
+GDAL                   3.6.2
+geopandas              1.0.1
+gitdb                  4.0.12
+GitPython              3.1.45
+gmpy2                  2.2.1
+grad-cam               1.5.5
+idna                   3.11
+importlib_metadata     8.7.0
+importlib_resources    6.5.2
+iniconfig              2.1.0
+interrogate            1.7.0
+Jinja2                 3.1.6
+joblib                 1.5.1
+kiwisolver             1.4.7
+mapclassify            2.8.1
+Markdown               3.9
+markdown-it-py         3.0.0
+MarkupSafe             3.0.2
+mat4py                 0.6.0
+matplotlib             3.9.4
+mccabe                 0.7.0
+mdurl                  0.1.2
+mkl_fft                1.3.11
+mkl_random             1.2.8
+mkl-service            2.4.0
+mmcv                   2.0.1
+mmdet                  3.0.0
+mmengine               0.9.1
+mmpretrain             1.1.0
+mmsegmentation         1.0.0
+model-index            0.1.11
+modelindex             0.0.2
+mpmath                 1.3.0
+munch                  4.0.0
+munkres                1.1.4
+networkx               3.2.1
+numpy                  1.23.5
+olefile                0.47
+opencv-python          4.12.0.88
+opencv-python-headless 4.12.0.88
+ordered-set            4.1.0
+packaging              25.0
+pandas                 2.3.1
+Pillow                 8.2.0
+pip                    25.2
+platformdirs           4.4.0
+pluggy                 1.6.0
+prettytable            3.16.0
+protobuf               6.33.0
+py                     1.11.0
+pycocotools            2.0.10
+pycodestyle            2.14.0
+pycparser              2.23
+pydantic               2.12.3
+pydantic_core          2.41.4
+pyflakes               3.4.0
+Pygments               2.19.2
+pyogrio                0.10.0
+pyparsing              3.0.9
+pyproj                 3.6.1
+PySocks                1.7.1
+pytest                 8.4.2
+python-dateutil        2.9.0.post0
+pytz                   2025.2
+PyYAML                 6.0.2
+rasterio               1.2.10
+requests               2.32.5
+rich                   14.2.0
+scikit-learn           1.6.1
+scipy                  1.13.1
+sentry-sdk             2.42.1
+setuptools             80.9.0
+shapely                2.0.5
+simsimd                6.5.3
+six                    1.17.0
+smmap                  5.0.2
+snuggs                 1.4.7
+stringzilla            4.2.2
+sympy                  1.14.0
+tabulate               0.9.0
+termcolor              3.1.0
+terminaltables         3.1.10
+threadpoolctl          3.6.0
+tifffile               2024.8.30
+tomli                  2.3.0
+torch                  2.0.1
+torchaudio             2.0.2
+torchvision            0.15.2
+tqdm                   4.67.1
+triton                 2.0.0
+ttach                  0.0.3
+typing_extensions      4.15.0
+typing-inspection      0.4.2
+tzdata                 2025.2
+unicodedata2           16.0.0
+urllib3                2.5.0
+wandb                  0.22.2
+wcwidth                0.2.14
+wheel                  0.45.1
+xdoctest               1.3.0
+xyzservices            2025.10.0
+yapf                   0.43.0
+zipp                   3.23.0
