@@ -1,0 +1,49 @@
+SOLVER:
+  IMS_PER_BATCH: 8
+  BASE_LR: 1e-4
+  MAX_EPOCH: 61
+  STEPS: (25,)
+  # STEPS: (50,75)
+
+  WEIGHT_DECAY: 0.0001
+  CHECKPOINT_PERIOD: 1
+  OPTIMIZER: "ADAM"
+  AMSGRAD: True
+
+DATALOADER:
+  NUM_WORKERS: 8
+
+DATASETS:
+  IMAGE:
+    PIXEL_MEAN: [109.54834, 114.86825, 102.69644]
+    PIXEL_STD: [52.80287, 48.31333, 46.67280]
+    TO_255: True
+    HEIGHT: 512
+    WIDTH: 512
+  TARGET:
+    HEIGHT: 128
+    WIDTH: 128
+  ORIGIN:
+    # HEIGHT: 512
+    # WIDTH: 512
+    HEIGHT: 300
+    WIDTH: 300
+  TRAIN: ("lyg_train",)
+  TEST: ("lyg_test",)
+
+MODEL:
+  NAME: "HRNet48v2"
+  HEAD_SIZE: [[2]]
+  OUT_FEATURE_CHANNELS: 256
+  LOSS_WEIGHTS:
+    loss_joff: 0.25    # joff  regression
+    loss_jloc: 8.0     # jloc  classification
+    loss_mask: 1.0
+    loss_afm : 0.1
+    # loss_framefield: 0.1
+    loss_remask : 1.0
+    # loss_smooth: 0.1  # 新增
+
+# OUTPUT_DIR: "./outputs/lyg_hrnet48_hash"
+OUTPUT_DIR: "./outputs/lyg_hrnet48_300"
+# OUTPUT_DIR: "./outputs/lyg_hrnet48_20210221"

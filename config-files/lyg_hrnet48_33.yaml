@@ -1,0 +1,55 @@
+SOLVER:
+  IMS_PER_BATCH: 8
+  BASE_LR: 0.001
+  MAX_EPOCH: 101
+  STEPS: (30, 60)  # 延迟学习率衰减，优化顶点预测
+  WEIGHT_DECAY: 0.0001
+  CHECKPOINT_PERIOD: 10
+  OPTIMIZER: "ADAM"
+  AMSGRAD: True
+
+DATALOADER:
+  NUM_WORKERS: 16
+
+DATASETS:
+  IMAGE:
+    PIXEL_MEAN: [109.54834, 114.86825, 102.69644]
+    PIXEL_STD: [52.80287, 48.31333, 46.67280]
+    TO_255: True
+    HEIGHT: 512
+    WIDTH: 512
+  TARGET:
+    HEIGHT: 128
+    WIDTH: 128
+  ORIGIN:
+    HEIGHT: 512
+    WIDTH: 512
+  TRAIN: ("lyg_train",)
+  TEST: ("lyg_test",)
+
+MODEL:
+  # LOSS_WEIGHTS:
+  #   loss_jloc: 1.0
+  #   loss_joff: 1.0
+  #   loss_mask: 10.0
+  #   loss_remask: 10.0
+  #   loss_framefield: 0.1
+  #   loss_align90: 0.02
+  #   loss_smooth: 0.001
+  #   loss_int_align: 0.2
+  #   loss_edge_align: 0.2
+  #   loss_int_edge: 0.2
+  #   loss_junc_frame: 0.1
+  LOSS_WEIGHTS:
+    loss_jloc: 1.0
+    loss_joff: 1.0
+    loss_mask: 5.0
+    loss_remask: 5.0
+    loss_framefield: 1.0
+    loss_align90: 0.2
+    loss_smooth: 0.01
+    loss_int_align: 0.5
+    loss_edge_align: 0.5
+    loss_int_edge: 0.5
+    loss_junc_frame: 0.5
+OUTPUT_DIR: "./outputs/lyg_hrnet48_ffl33"
